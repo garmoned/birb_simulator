@@ -10,8 +10,7 @@ public class RandomSpawner : MonoBehaviour
     public float spawnMostWait;
     public float spawnLeastWait;
     public int startWait;
-    public float radius;
-    public bool stop;
+    public float timer = 0f;
 
     int randBuilding;
 
@@ -22,6 +21,7 @@ public class RandomSpawner : MonoBehaviour
 
     void Update()
     {
+        timer += Time.deltaTime;
         spawnWait = Random.Range(spawnLeastWait, spawnMostWait);
     }
 
@@ -29,14 +29,11 @@ public class RandomSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(startWait);
 
-        while(!stop)
+        while(timer <= 50)
         {
             randBuilding = Random.Range(0, buildings.Length);
             Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), Random.Range(-spawnValues.y, spawnValues.y), Random.Range(-spawnValues.z, spawnValues.z));
 
-            if (DetectCollisions(spawnPosition) > 0)
-                continue;
-                
             Instantiate(buildings[randBuilding], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
 
             buildings[randBuilding].transform.localScale = new Vector3(Random.Range(5.0f, 10.0f), Random.Range(5.0f, 10.0f), Random.Range(5.0f, 10.0f));
@@ -45,10 +42,4 @@ public class RandomSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnWait);
         }
     }
-
-    private int DetectCollisions(Vector3 pos)
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(pos, radius);
-        return hitColliders.Length;
-    }   
 }
