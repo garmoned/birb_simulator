@@ -27,31 +27,47 @@ public class Flight : MonoBehaviour
     public float jumpForce;
     public float speed = 5;
 
-    public Vector3 jump_vector = new Vector3(0,10,3);
+    public float originalMass = 7;
+    public float originalDrag = 10;
+
+    public Vector3 jump_vector = new Vector3(0, 10, 3);
     // Start is called before the first frame update
     void Start()
     {
-        
+        originalDrag = this.player_body.drag;
     }
 
     // Update is called once per frame
     void Update()
-    { 
-    
+    {
+
         if (Input.GetKeyDown(KeyCode.Space))
-        {      
-    
-            player_body.velocity = (new Vector3(this.transform.forward.x * 3.0f,10,this.transform.forward.z * 3.0f));
+        {
+
+            player_body.velocity = (new Vector3(this.transform.forward.x * 3.0f, 10, this.transform.forward.z * 3.0f));
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+
+
+            float f = Vector3.Magnitude(Vector3.Project(player_body.velocity, transform.forward));
+
+            Vector3 lift = new Vector3(0, f * (Physics.gravity.y * -0.5f), 0);
+
+
+            Debug.Log(lift + "lift");
+
+            this.player_body.AddForce(lift);
 
         }
 
-        
+
         if (axes == RotationAxes.MouseXAndY)
         {
             float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 
             rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
         }
@@ -62,10 +78,10 @@ public class Flight : MonoBehaviour
         else
         {
             rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
             transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
         }
-        transform.Rotate( new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * speed);
+        transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * speed);
     }
 }
