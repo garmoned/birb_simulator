@@ -1,5 +1,9 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Thu-Development.unity
+=======
+- path: Assets/Scenes/SampleScene.unity
+>>>>>>> ed_branch
   isLoaded: 1
   isActive: 1
   isSubScene: 0
