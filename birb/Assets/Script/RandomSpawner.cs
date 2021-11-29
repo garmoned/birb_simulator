@@ -4,42 +4,49 @@ using UnityEngine;
 
 public class RandomSpawner : MonoBehaviour
 {
-    public GameObject[] buildings;
-    public Vector3 spawnValues;
-    public float spawnWait;
-    public float spawnMostWait;
-    public float spawnLeastWait;
-    public int startWait;
-    public float timer = 0f;
+    public GameObject building1;
+    public GameObject building2;
+    public GameObject building3;
+    public GameObject building4;
+    public GameObject building5;
+    public GameObject building6;
+    public GameObject building7;
+    public GameObject building8;
 
-    int randBuilding;
+    public int numberOfBuildings;
+
+    public GameObject terrain;
 
     void Start()
     {
-        StartCoroutine(waitSpawner());
+        GenerateObjects();
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        spawnWait = Random.Range(spawnLeastWait, spawnMostWait);
+
     }
 
-    IEnumerator waitSpawner()
+    void GenerateObject(GameObject go, int amount)
     {
-        yield return new WaitForSeconds(startWait);
+        if (go == null) return;
 
-        while(timer <= 50)
+        for(int i = 0; i < amount; i++)
         {
-            randBuilding = Random.Range(0, buildings.Length);
-            Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), Random.Range(-spawnValues.y, spawnValues.y), Random.Range(-spawnValues.z, spawnValues.z));
-
-            Instantiate(buildings[randBuilding], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
-
-            buildings[randBuilding].transform.localScale = new Vector3(Random.Range(5.0f, 10.0f), Random.Range(5.0f, 10.0f), Random.Range(5.0f, 10.0f));
-            buildings[randBuilding].transform.Rotate(new Vector3(0, Random.Range(1.0f, 90.0f), 0));
-
-            yield return new WaitForSeconds(spawnWait);
+            GameObject tmp = Instantiate(go);
+            tmp.gameObject.transform.position = new Vector3(Random.Range(-1100.0f, 1000.0f), tmp.gameObject.transform.position.y, Random.Range(-900.0f, 1000.0f));
         }
+    }
+
+    void GenerateObjects()
+    {
+        GenerateObject(building1, numberOfBuildings);
+        GenerateObject(building2, numberOfBuildings);
+        GenerateObject(building3, numberOfBuildings);
+        GenerateObject(building4, numberOfBuildings);
+        GenerateObject(building5, numberOfBuildings);
+        GenerateObject(building6, numberOfBuildings);
+        GenerateObject(building7, numberOfBuildings);
+        GenerateObject(building8, numberOfBuildings);
     }
 }
