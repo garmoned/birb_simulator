@@ -13,7 +13,7 @@ public class RandomSpawner : MonoBehaviour
     public GameObject building7;
     public GameObject building8;
 
-    public int numberOfBuildings;
+    public int numberOfBuildings = 3;
 
     public GameObject terrain;
 
@@ -34,7 +34,7 @@ public class RandomSpawner : MonoBehaviour
         for(int i = 0; i < amount; i++)
         {
             GameObject tmp = Instantiate(go);
-            tmp.gameObject.transform.position = new Vector3(Random.Range(-1100.0f, 1000.0f), tmp.gameObject.transform.position.y, Random.Range(-900.0f, 1000.0f));
+            tmp.gameObject.transform.position = new Vector3(Random.Range(-1100.0f, 1000.0f), terrain.transform.position.y, Random.Range(-900.0f, 1000.0f));
         }
     }
 
