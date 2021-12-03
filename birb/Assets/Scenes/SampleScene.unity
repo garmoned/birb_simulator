@@ -2364,6 +2364,7 @@ MonoBehaviour:
   forwardSpeed: 30
   alive: 1
   hud: {fileID: 157316161}
+  col: {fileID: 1381897081}
   jump_vector: {x: 0, y: 10, z: 3}
 --- !u!65 &1381897081
 BoxCollider:

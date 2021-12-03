@@ -39,6 +39,8 @@ public class Flight : MonoBehaviour
 
     public Canvas hud;
 
+    public Collider col;
+
     public Vector3 jump_vector = new Vector3(0, 10, 3);
     // Start is called before the first frame update
     void Start()
@@ -47,12 +49,39 @@ public class Flight : MonoBehaviour
         hud.enabled = false;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+  
+
+        if(player_body.velocity.magnitude > 100)
+        {
+            Debug.Log("You Died");
+
+            if (alive)
+            {
+                Debug.Log(player_body.velocity.magnitude);
+            }
+
+
+            player_body.AddTorque(new Vector3(1500, 1500, 1500));
+            
+            alive = false;
+
+
+         
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
 
+
         if (!alive)
         {
+            hud.enabled = true;
+
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -60,17 +89,6 @@ public class Flight : MonoBehaviour
 
             return;
         }
-
-        if(transform.position.y < -8.8)
-        {
-            Debug.Log("You Died");
-            alive = false;
-
-            hud.enabled = true;
-            
-        }
-
-        
 
 
         //flys toward the pointing direction
