@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Flight : MonoBehaviour
@@ -34,16 +35,43 @@ public class Flight : MonoBehaviour
 
     public float forwardSpeed = 30;
 
+    public bool alive = true;
+
+    public Canvas hud;
+
     public Vector3 jump_vector = new Vector3(0, 10, 3);
     // Start is called before the first frame update
     void Start()
     {
         originalDrag = this.player_body.drag;
+        hud.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (!alive)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+            return;
+        }
+
+        if(transform.position.y < -8.8)
+        {
+            Debug.Log("You Died");
+            alive = false;
+
+            hud.enabled = true;
+            
+        }
+
+        
+
 
         //flys toward the pointing direction
         if (Input.GetKeyDown(KeyCode.Space))

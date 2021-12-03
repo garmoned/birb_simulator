@@ -34,7 +34,7 @@ public class RandomSpawner : MonoBehaviour
         for(int i = 0; i < amount; i++)
         {
             GameObject tmp = Instantiate(go);
-            tmp.gameObject.transform.position = new Vector3(Random.Range(-1100.0f, 1000.0f), terrain.transform.position.y, Random.Range(-900.0f, 1000.0f));
+            tmp.gameObject.transform.position = new Vector3(Random.Range(-3800.0f, 1300.0f), terrain.transform.position.y, Random.Range(-5800.0f, 3000.0f));
         }
     }
 
