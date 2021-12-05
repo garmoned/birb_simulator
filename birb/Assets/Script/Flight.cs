@@ -52,8 +52,6 @@ public class Flight : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-  
-
         if(player_body.velocity.magnitude > 100)
         {
             Debug.Log("You Died");
@@ -65,11 +63,10 @@ public class Flight : MonoBehaviour
 
 
             player_body.AddTorque(new Vector3(1500, 1500, 1500));
-            
+
+            FindObjectOfType<SoundEffects>().DeathSound();
+
             alive = false;
-
-
-         
         }
     }
 
