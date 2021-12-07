@@ -97,44 +97,25 @@ public class Flight : MonoBehaviour
         }
         
 
-        //for gliding with simulated thrust
-        if (Input.GetKey(KeyCode.F))
-        {
+ 
+        float f = Vector3.Magnitude(new Vector3(player_body.velocity.x, 0, player_body.velocity.z));
+
+        Vector3 lift = new Vector3(0, f * (Physics.gravity.y * -0.025f), 0);
 
 
-            float f = Vector3.Magnitude(new Vector3(player_body.velocity.x, 0, player_body.velocity.z));
+        Debug.Log(lift + "lift");
 
-            Vector3 lift = new Vector3(0, f * (Physics.gravity.y * -0.025f), 0);
-
-
-            Debug.Log(lift + "lift");
-
-            this.player_body.AddForce(lift);
-
-        }
+        this.player_body.AddForce(lift);
 
 
+        float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 
-        if (axes == RotationAxes.MouseXAndY)
-        {
-            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+        rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+        rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
-
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-        }
-        else if (axes == RotationAxes.MouseX)
-        {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
-        }
-        else
-        {
-            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-            rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
-
-            transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
-        }
+        transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+        
+   
         transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0) * Time.deltaTime * speed);
 
     }
